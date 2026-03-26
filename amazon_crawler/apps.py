@@ -1,3 +1,4 @@
+"""App configuration for the amazon_crawler app."""
 from django.apps import AppConfig
 
 
