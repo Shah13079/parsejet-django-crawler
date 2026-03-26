@@ -6,8 +6,13 @@ from django.contrib.auth.models import (
 )
 
 
-# Create your models here.
 class MyAccountManager(BaseUserManager):
+    """Manager for the custom Account model.
+
+    Provides helper methods for creating regular users and superusers
+    with email-based authentication.
+    """
+
     def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
             raise ValueError("User must have an email address")
@@ -43,6 +48,8 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
+    """Custom user model that uses email as the primary authentication field."""
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
@@ -66,7 +73,7 @@ class Account(AbstractBaseUser):
         return f"{self.first_name} {self.last_name}"
 
     def __unicode__(self):
-        return "self.email"
+        return self.email
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

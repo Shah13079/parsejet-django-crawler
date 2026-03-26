@@ -9,10 +9,20 @@ from django.contrib.auth.tokens import default_token_generator
 
 @shared_task(bind=True)
 def scrape_amazon_products(self, products_urls, current_user, task_id, current_site):
+    """Celery task that scrapes product data from a list of Amazon URLs.
+
+    Delegates to amazon_product_calling which handles concurrent
+    fetching, parsing, database persistence, and email notification.
+    """
     amazon_product_calling(products_urls, current_user, task_id, current_site)
 
 @shared_task(bind=True)
 def sending_activation_mail(self, template_name, current_site, user_id, email, sub):
+    """Celery task that sends an account activation or password-reset email.
+
+    Renders the specified template with a unique token link and
+    delivers it as an HTML email to the user.
+    """
     user = Account.objects.get(pk=user_id)
     message = render_to_string(
         f"accounts/{template_name}.html",
@@ -23,7 +33,7 @@ def sending_activation_mail(self, template_name, current_site, user_id, email, s
             "token": default_token_generator.make_token(user),
         },
     )
-    
+
     to_email = user.email
     mail_subject = sub
     text_content = ""
@@ -35,6 +45,11 @@ def sending_activation_mail(self, template_name, current_site, user_id, email, s
 
 @shared_task(bind=True)
 def scrape_ebay_by_products(self, products_urls, current_user, task_id, current_site):
+    """Celery task that scrapes product data from a list of eBay URLs.
+
+    Calls the eBay crawling engine, then sends a job-complete
+    notification email if at least one product was scraped.
+    """
     print("These are all my products:", products_urls)
 
     logs = ebay_products_crawling(products_urls, current_user, task_id, current_site)

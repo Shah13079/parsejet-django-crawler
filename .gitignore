@@ -159,3 +159,6 @@ dmypy.json
 
 accounts/checking2.py
 accounts/checking3.py
+
+# IDE config
+.vscode/

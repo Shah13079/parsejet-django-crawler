@@ -1,6 +1,3 @@
 release:python manage.py migrate
-web: gunicorn Crawler.wsgi --log-file -
-celery: celery -A Crawler.cele worker -l INFO
-
-
-
+web: gunicorn crawler.wsgi --log-file -
+celery: celery -A crawler.cele worker -l INFO

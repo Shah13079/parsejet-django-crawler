@@ -4,11 +4,11 @@ from .models import Account
 
 class Registration(ModelForm):
     password=forms.CharField(widget=forms.PasswordInput(attrs={
-        'Placeholder':"Password"
-    })) 
+        'placeholder':"Password"
+    }))
 
     Repeat_password=forms.CharField(widget=forms.PasswordInput(attrs={
-        'Placeholder':"Enter Password again"
+        'placeholder':"Enter Password again"
     }))
 
 
@@ -23,7 +23,7 @@ class Registration(ModelForm):
         self.fields['email'].widget.attrs['placeholder']='Email'
         self.fields['username'].widget.attrs['placeholder']='username'
         self.fields['password'].widget.attrs['placeholder']='Password'
-        
+
 
         for field in self.fields:
             self.fields[field].widget.attrs['class']='form-control'
@@ -38,12 +38,12 @@ class Registration(ModelForm):
             raise forms.ValidationError(
                 "password does not match!"
             )
-    
+
 class Profile_update(forms.ModelForm):
     first_name = forms.CharField(required=False)
-    last_name = forms.CharField(required=False) 
-    # email = forms.CharField(required=False) 
-    about_you = forms.CharField(required=False) 
+    last_name = forms.CharField(required=False)
+    # email = forms.CharField(required=False)
+    about_you = forms.CharField(required=False)
     address = forms.CharField(required=False)
 
     class Meta:
