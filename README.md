@@ -179,7 +179,7 @@ PROXY_AUTH=
 
 ## Author
 
-Hussain -- [parsejet.com](http://www.parsejet.com)
+Shah Hussain -- [parsejet.com](http://www.parsejet.com)
 
 ---
 
